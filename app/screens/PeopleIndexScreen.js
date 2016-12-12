@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 
 import React, {Component} from 'react';
 import {
@@ -20,17 +14,46 @@ import {
     ListView,
     TouchableOpacity
 } from 'react-native';
-import ViewContainer from './app/components/ViewContainer';
+import ViewContainer from '../components/ViewContainer';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import PeopleIndexScreen from './app/screens/PeopleIndexScreen';
 
-export default class AwesomeProject extends Component {
+const people = [
+    {firstName: 'jordan', lastName: 'leigh', roomNumber: 30},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'will', lastName: 'piers', roomNumber: 14},
+    {firstName: 'berkeley', lastName: 'wanner', roomNumber: 3}
+]
+
+class PeopleIndexScreen extends Component {
     constructor(props) {
         super(props)
-        // var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
-        // this.state = {
-        //     peopleDataSource: ds.cloneWithRows(people)
-        // }
+        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
+        this.state = {
+            peopleDataSource: ds.cloneWithRows(people)
+        }
     }
 
     state = {
@@ -132,9 +155,13 @@ export default class AwesomeProject extends Component {
         );
 
         return (
-            <PeopleIndexScreen>
-
-            </PeopleIndexScreen>
+            <ViewContainer>
+                <Text>Hello</Text>
+                <ListView
+                    style={{marginTop:100}}
+                    dataSource={this.state.peopleDataSource}
+                    renderRow={(person)=>{return this._renderPersonRow(person)}}/>
+            </ViewContainer>
 
         );
     }
@@ -186,4 +213,4 @@ const styles = StyleSheet.create({
     }
 });
 
-AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+module.exports = PeopleIndexScreen
