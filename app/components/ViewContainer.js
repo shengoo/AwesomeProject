@@ -11,7 +11,7 @@ class ViewContainer extends Component {
 
   render(){
     return(
-      <View style={styles.viewContainer}>
+      <View style={[styles.viewContainer, this.props.style || {}]}>
         {this.props.children}
       </View>
     )
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection:'column',
     justifyContent:'flex-start',
+      // backgroundColor: 'blue',
     alignItems:'stretch'
   }
 })

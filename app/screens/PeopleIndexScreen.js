@@ -16,6 +16,8 @@ import {
 } from 'react-native';
 import ViewContainer from '../components/ViewContainer';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import SearchForm from '../components/SearchForm';
+import SearchHistory from '../components/SearchHistory';
 
 const people = [
     {firstName: 'jordan', lastName: 'leigh', roomNumber: 30},
@@ -156,11 +158,11 @@ class PeopleIndexScreen extends Component {
 
         return (
             <ViewContainer>
-                <Text>Hello</Text>
-                <ListView
-                    style={{marginTop:100}}
-                    dataSource={this.state.peopleDataSource}
-                    renderRow={(person)=>{return this._renderPersonRow(person)}}/>
+                <SearchForm {...this.props}></SearchForm>
+                <SearchHistory/>
+                {/*<ListView*/}
+                    {/*dataSource={this.state.peopleDataSource}*/}
+                    {/*renderRow={(person)=>{return this._renderPersonRow(person)}}/>*/}
             </ViewContainer>
 
         );
@@ -168,12 +170,20 @@ class PeopleIndexScreen extends Component {
 
     _renderPersonRow(person) {
         return (
-            <TouchableOpacity  style={styles.personRow}>
+            <TouchableOpacity  style={styles.personRow} onPress={(event) => this._navigateToPersonShow(person) }>
                 <Text style={styles.personName}>{person.firstName}</Text>
                 <View style={{flex:1}} />
                 <Icon name="chevron-right" size={20} style={styles.personMoreIcon} />
             </TouchableOpacity >
         )
+    }
+
+    _navigateToPersonShow(person) {
+        this.props.navigator.push({
+            ident: "detail",
+            title:'detail',
+            person
+        })
     }
 }
 

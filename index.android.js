@@ -20,17 +20,12 @@ import {
     ListView,
     TouchableOpacity
 } from 'react-native';
-import ViewContainer from './app/components/ViewContainer';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import PeopleIndexScreen from './app/screens/PeopleIndexScreen';
+import PersonShowScreen from './app/screens/PersonShowScreen';
 
 export default class AwesomeProject extends Component {
     constructor(props) {
         super(props)
-        // var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
-        // this.state = {
-        //     peopleDataSource: ds.cloneWithRows(people)
-        // }
     }
 
     state = {
@@ -38,40 +33,59 @@ export default class AwesomeProject extends Component {
         falseSwitchIsOn: false,
     };
 
-    render() {
-        const routes = [
-            {title: 'First Scene', index: 0},
-            {title: 'Second Scene', index: 1},
-        ];
-        console.log(routes);
-        const renderScene = (route, navigator) => {
-            console.log(arguments)
-            if (route.index === 0) {
+    renderScene(route, navigator){
+        var globalNavigatorProps = {navigator};
+        switch (route.ident){
+            case 'index':
                 return (
-                    <TouchableHighlight onPress={() => {
-                        if (route.index === 0) {
-                            navigator.push(routes[1]);
-                        } else {
-                            navigator.pop();
-                        }
-                    }}>
-                        <Text>Hello {route.index}!</Text>
-                    </TouchableHighlight>
+                    <PeopleIndexScreen {...globalNavigatorProps}>
+
+                    </PeopleIndexScreen>
+                );
+            case 'detail':
+                return (
+                    <PersonShowScreen {...globalNavigatorProps} person={route.person}>
+
+                    </PersonShowScreen>
+                );
+            default:
+                return(
+                    <Text style={{paddingTop:100}}>
+                        Wrong route.
+                    </Text>
                 )
+        }
+    }
+
+    routeMapper = {
+        LeftButton: (route, navigator, index, navState) => {
+            if (route.ident === 'index') {
+                return null;
             } else {
                 return (
-                    <TouchableHighlight onPress={() => {
-                        if (route.index === 0) {
-                            navigator.push(routes[1]);
-                        } else {
-                            navigator.pop();
-                        }
-                    }}>
-                        <Text>Hello {route.index}!</Text>
+                    <TouchableHighlight onPress={() => navigator.pop()}>
+                        <Text>Back</Text>
                     </TouchableHighlight>
-                )
+                );
             }
-        }
+        },
+        RightButton: (route, navigator, index, navState) => {
+            return (<Text>Done</Text>);
+        },
+        Title: (route, navigator, index, navState) => {
+            return (<Text>{route.title}</Text>);
+        },
+    }
+
+    navigationBar = (
+        <Navigator.NavigationBar
+            routeMapper={this.routeMapper}
+            style={styles.navigationBarStyles}
+        />
+    )
+
+    render() {
+
 
         const onPressSearch = () => {
             console.log(arguments)
@@ -99,90 +113,29 @@ export default class AwesomeProject extends Component {
             </View>
         )
 
-        const routeMapper = {
-            LeftButton: (route, navigator, index, navState) => {
-                if (route.index === 1) {
-                    return (<Text>Back</Text>)
-                } else {
-                    return null;
-                }
-            },
-            RightButton: (route, navigator, index, navState) => {
-                return (<Text>Done</Text>);
-            },
-            Title: (route, navigator, index, navState) => {
-                return (<Text>Awesome Nav Bar</Text>);
-            },
-        }
 
-        const navigationBar = (
-            <Navigator.NavigationBar
-                routeMapper={routeMapper}
-                style={{backgroundColor: 'gray'}}
-            />
-        )
 
-        const nav = (
+
+
+        return (
             <Navigator
-                initialRoute={{title: 'Awesome Scene', index: 0}}
-                renderScene={renderScene}
-                navigationBar={navigationBar}
-                style={{padding: 100}}
-            />
-        );
-
-        return (
-            <PeopleIndexScreen>
-
-            </PeopleIndexScreen>
-
+                initialRoute={{ident:'index',title:'Search'}}
+                ref="appNavigator"
+                style={styles.navigatorStyles}
+                renderScene={this.renderScene}
+                navigationBar={this.navigationBar}
+                />
         );
     }
 
-    _renderPersonRow(person) {
-        return (
-            <TouchableOpacity  style={styles.personRow}>
-                <Text style={styles.personName}>{person.firstName}</Text>
-                <View style={{flex:1}} />
-                <Icon name="chevron-right" size={20} style={styles.personMoreIcon} />
-            </TouchableOpacity >
-        )
-    }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'stretch',
-        backgroundColor: '#F5FCFF',
-        padding: 10,
+    navigatorStyles:{
+        paddingTop:56,
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
-    personRow:{
-        flexDirection:'row',
-        justifyContent:'flex-start',
-        alignItems:'center',
-        height:50
-    },
-    personName:{
-        // textTransform:'capitalize'
-        marginLeft:25
-    },
-    personMoreIcon:{
-        color:'green',
-        height:20,
-        width:20,
-        marginRight:25
+    navigationBarStyles:{
+        backgroundColor: 'gray'
     }
 });
 
