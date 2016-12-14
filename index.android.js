@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         paddingTop:56,
     },
     navigationBarStyles:{
-        backgroundColor: 'gray'
+        // backgroundColor: 'gray'
     }
 });
 

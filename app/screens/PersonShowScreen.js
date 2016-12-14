@@ -28,7 +28,7 @@ export default class PersonShowScreen extends Component {
     render() {
         return (
             <ViewContainer style={{backgroundColor:'red'}}>
-                <Text>{this.props.person.firstName}</Text>
+                <Text>Result</Text>
             </ViewContainer>
 
         );

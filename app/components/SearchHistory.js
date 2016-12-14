@@ -6,67 +6,86 @@ import {
     ListView,
     TouchableOpacity,
     AsyncStorage,
-    RecyclerViewBackedScrollView
+    ScrollView,
+    TouchableHighlight
 } from 'react-native';
+import SearchStore from '../stores/SearchStore';
+import SearchHistoryItem from './SearchHistoryItem';
+
 
 export default class SearchHistory extends Component {
     constructor(props) {
         super(props);
+        console.log(props)
 
-
-        // this.state = {history:[]}
-        this.updateHistory();
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            dataSource: ds.cloneWithRows([]),
+            history: SearchStore.getAll(),
+            dataSource: this.ds.cloneWithRows(SearchStore.getAll()),
         };
 
+        this.getHistory = this.getHistory.bind(this);
+        this.renderRow = this.renderRow.bind(this);
     }
 
-    componentWillUpdate() {
-        this.updateHistory();
+    componentWillMount() {
+        SearchStore.on('change', this.getHistory);
     }
 
-    updateHistory() {
-        AsyncStorage.getItem('q', (error, result) => {
-            const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-            if (!result) {
-                var data = JSON.stringify([this.state.text]);
-                this.setState({history: "no history"})
-                this.setState({
-                    dataSource: ds.cloneWithRows([]),
-                });
-            } else {
-                this.setState({history: JSON.parse(result)})
-                this.setState({
-                    dataSource: ds.cloneWithRows(JSON.parse(result)),
-                });
-            }
-        })
+    componentWillUnmount() {
+        SearchStore.removeListener('change', this.getHistory);
+    }
+
+    getHistory() {
+        this.setState({
+            dataSource: this.ds.cloneWithRows(SearchStore.getAll()),
+        });
     }
 
 
     render() {
         return (
-            <ListView
-                dataSource={this.state.dataSource}
-                renderRow={(rowData) => <TouchableOpacity><Text>{rowData}</Text></TouchableOpacity>}
-                renderScrollComponent={props => <RecyclerViewBackedScrollView {...props} />}
-                renderSeparator={this._renderSeparator}
-                enableEmptySections={true}
-            />
+            <View>
+                <Text style={styles.headerText}>History</Text>
+                <ListView
+                    style={styles.history}
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderRow}
+                    renderSeparator={this._renderSeparator}
+                />
+            </View>
         )
     }
+
 
     _renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
         return (
             <View
                 key={`${sectionID}-${rowID}`}
                 style={{height: adjacentRowHighlighted ? 4 : 1,
-                    backgroundColor: adjacentRowHighlighted ? '#3B5998' : '#CCCCCC',}}
+                    backgroundColor: adjacentRowHighlighted ? '#3B5998' : '#CCCCCC',
+                    left:10}}
             />
         );
     }
 
+    renderRow(rowData, sectionID, rowID) {
+        //(rowData) => <TouchableOpacity><Text>{rowData}</Text></TouchableOpacity>
+        return (
+            <SearchHistoryItem   {...this.props} data={rowData}/>
+        )
+    }
+
+
 
 }
+
+const styles = StyleSheet.create({
+    history:{
+        // marginLeft:10
+    },
+    headerText: {
+        fontSize: 20,
+        textAlign:'center'
+    },
+});
