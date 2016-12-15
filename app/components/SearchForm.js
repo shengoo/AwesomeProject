@@ -1,19 +1,13 @@
 import React, {Component} from 'react';
 import {
-    AppRegistry,
     StyleSheet,
     Text,
     View,
-    StatusBar,
-    Button,
     TextInput,
     Switch,
-    Navigator,
     TouchableHighlight,
-    ListView,
     TouchableOpacity,
     Alert,
-    AsyncStorage
 } from 'react-native';
 
 import * as SearchActions from '../actions/SearchActions';

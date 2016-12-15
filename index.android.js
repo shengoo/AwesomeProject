@@ -18,7 +18,8 @@ import {
     Navigator,
     TouchableHighlight,
     ListView,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native';
 import PeopleIndexScreen from './app/screens/PeopleIndexScreen';
 import PersonShowScreen from './app/screens/PersonShowScreen';
@@ -64,7 +65,10 @@ export default class AwesomeProject extends Component {
             } else {
                 return (
                     <TouchableHighlight underlayColor={'gray'} onPress={() => navigator.pop()}>
-                        <Text>Back</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <Image source={require('./app/components/back.png')} style={{width: 20, height: 20}} />
+                            <Text>Back</Text>
+                        </View>
                     </TouchableHighlight>
                 );
             }

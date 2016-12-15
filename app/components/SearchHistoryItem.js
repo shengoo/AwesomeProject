@@ -4,7 +4,9 @@ import {
     Text,
     View,
     TouchableOpacity,
+    Image,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 
 
@@ -18,6 +20,7 @@ export default class SearchHistoryItem extends Component {
             <TouchableOpacity onPress={(event) => {this._navigateToPersonShow(this.props.data)} }>
                 <View style={styles.container}>
                     <Text style={styles.title}>{this.props.data}</Text>
+                    <Image source={require('./more.png')} style={{width: 30, height: 30}} />
                 </View>
             </TouchableOpacity>
         );
@@ -36,6 +39,7 @@ var styles = StyleSheet.create({
     container: {
         height: 65,
         flexDirection: 'row',
+        alignItems:'center',
         padding: 10,
         backgroundColor:'white'
     },

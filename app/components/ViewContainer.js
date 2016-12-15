@@ -25,9 +25,10 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection:'column',
     justifyContent:'flex-start',
-      // backgroundColor: '#eeeeee',
+      backgroundColor: 'white',
     alignItems:'stretch',
       // padding:10
+      // borderWidth:1
   }
 })
 

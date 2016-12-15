@@ -5,8 +5,6 @@ import {
     View,
     ListView,
     TouchableOpacity,
-    AsyncStorage,
-    ScrollView,
     TouchableHighlight
 } from 'react-native';
 import SearchStore from '../stores/SearchStore';

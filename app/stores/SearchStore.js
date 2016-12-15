@@ -37,7 +37,7 @@ class SearchStore extends EventEmitter{
                 if(result){
                     arr = JSON.parse(result);
                 }
-                arr.push(q);
+                arr.unshift(q);
                 this.history = arr;
                 const data = JSON.stringify(arr);
                 AsyncStorage.setItem('q',data,(error)=>{
