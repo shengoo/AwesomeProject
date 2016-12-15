@@ -159,7 +159,7 @@ class PeopleIndexScreen extends Component {
         return (
             <ViewContainer>
                 <SearchForm {...this.props}></SearchForm>
-                <SearchHistory  {...this.props}/>
+                <SearchHistory {...this.props}/>
                 {/*<ListView*/}
                     {/*dataSource={this.state.peopleDataSource}*/}
                     {/*renderRow={(person)=>{return this._renderPersonRow(person)}}/>*/}

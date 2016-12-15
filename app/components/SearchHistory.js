@@ -45,7 +45,7 @@ export default class SearchHistory extends Component {
 
     render() {
         return (
-            <View>
+            <View style={[styles.viewContainer, this.props.style || {}]}>
                 <Text style={styles.headerText}>History</Text>
                 <ListView
                     style={styles.history}
@@ -81,11 +81,15 @@ export default class SearchHistory extends Component {
 }
 
 const styles = StyleSheet.create({
+    viewContainer:{
+      flex:1,
+    },
     history:{
         // marginLeft:10
     },
     headerText: {
         fontSize: 20,
-        textAlign:'center'
+        textAlign:'center',
+        padding:20
     },
 });

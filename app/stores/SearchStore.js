@@ -51,13 +51,17 @@ class SearchStore extends EventEmitter{
         }
     }
 
-    // deleteTodo(id){
-    //     var index = this.todos.findIndex(todo=>todo.id === id);
-    //     if(index > -1){
-    //         this.todos.splice(index,1);
-    //         this.emit('change');
-    //     }
-    // }
+    deleteItem(q){
+        var index = this.history.findIndex(item=>item === q);
+        if(index > -1){
+            this.history.splice(index,1);
+            const data = JSON.stringify(this.history);
+            AsyncStorage.setItem('q',data,(error)=>{
+
+            })
+            this.emit('change');
+        }
+    }
 
     handleActions(action){
         // console.log('TodoStoer received an action', action);
@@ -67,7 +71,7 @@ class SearchStore extends EventEmitter{
                 break;
             }
             case DELETE_HISTORY_ITEM:{
-                this.deleteTodo(action.id);
+                this.deleteItem(action.q);
                 break;
             }
             default:

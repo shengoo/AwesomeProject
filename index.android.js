@@ -44,7 +44,7 @@ export default class AwesomeProject extends Component {
                 );
             case 'detail':
                 return (
-                    <PersonShowScreen {...globalNavigatorProps} person={route.person}>
+                    <PersonShowScreen {...globalNavigatorProps} route={route}>
 
                     </PersonShowScreen>
                 );
@@ -63,14 +63,14 @@ export default class AwesomeProject extends Component {
                 return null;
             } else {
                 return (
-                    <TouchableHighlight onPress={() => navigator.pop()}>
+                    <TouchableHighlight underlayColor={'gray'} onPress={() => navigator.pop()}>
                         <Text>Back</Text>
                     </TouchableHighlight>
                 );
             }
         },
         RightButton: (route, navigator, index, navState) => {
-            return (<Text>Done</Text>);
+            return null;
         },
         Title: (route, navigator, index, navState) => {
             return (<Text>{route.title}</Text>);
@@ -81,6 +81,7 @@ export default class AwesomeProject extends Component {
         <Navigator.NavigationBar
             routeMapper={this.routeMapper}
             style={styles.navigationBarStyles}
+            navigationStyles={Navigator.NavigationBar.StylesIOS}
         />
     )
 

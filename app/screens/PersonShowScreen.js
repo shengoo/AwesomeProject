@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import ViewContainer from '../components/ViewContainer';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import SearchResult from '../components/SearchResult'
 
 
 
@@ -27,8 +28,8 @@ export default class PersonShowScreen extends Component {
 
     render() {
         return (
-            <ViewContainer style={{backgroundColor:'red'}}>
-                <Text>Result</Text>
+            <ViewContainer style={{backgroundColor:'white'}}>
+                <SearchResult {...this.props}/>
             </ViewContainer>
 
         );

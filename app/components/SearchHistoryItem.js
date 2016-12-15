@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 
+
 export default class SearchHistoryItem extends Component {
     constructor(props) {
         super(props);
@@ -26,6 +27,7 @@ export default class SearchHistoryItem extends Component {
         this.props.navigator.push({
             ident: "detail",
             title:data,
+            code:data
         })
     }
 }
